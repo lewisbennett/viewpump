@@ -1,6 +1,5 @@
 ﻿using Android.Graphics;
 using Android.Widget;
-using ViewPump;
 using ViewPump.Intercepting;
 
 namespace Sample.App.Interceptors

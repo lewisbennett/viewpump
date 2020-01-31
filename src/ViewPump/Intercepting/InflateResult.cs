@@ -2,7 +2,7 @@
 using Android.Util;
 using Android.Views;
 
-namespace ViewPump
+namespace ViewPump.Intercepting
 {
     public sealed class InflateResult
     {
