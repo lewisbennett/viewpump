@@ -37,7 +37,7 @@ namespace ViewPump.Inflation
         public static View OnActivityCreateView(Activity activity, View parent, View view, string name, Context context, IAttributeSet attrs)
         {
             if (!(activity.LayoutInflater is IViewPumpActivityFactory viewPumpActivityFactory))
-                throw new System.Exception("This activity does not wrap the base context. Use ViewPumpContextWrapper.Wrap in your activity's OnAttachBaseContext method.");
+                throw new System.Exception("This activity does not wrap the base context. Use ViewPumpContextWrapper.Wrap in your activity's AttachBaseContext method.");
 
             return viewPumpActivityFactory.OnActivityCreateView(parent, view, name, context, attrs);
         }
