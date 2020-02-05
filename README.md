@@ -37,4 +37,8 @@ public InflateResult Intercept(IChain chain)
     return result;
 }
 ```
-View the sample project for examples.
+Add your interceptor by calling `ViewPump.ViewPumpService.Instance.Interceptors.Add(new MyCustomInterceptor())`.
+
+## Samples
+
+See [samples](https://github.com/lewisbennett/viewpump/tree/master/samples) for examples.
