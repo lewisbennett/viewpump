@@ -6,6 +6,10 @@ namespace ViewPump
 {
     public class ViewPumpServiceImpl : IViewPumpService
     {
+        #region Fields
+        private readonly List<IInterceptor> _interceptors = new List<IInterceptor>();
+        #endregion
+
         #region Properties
         /// <summary>
         /// Gets or sets whether custom view creation is enabled.
@@ -15,7 +19,14 @@ namespace ViewPump
         /// <summary>
         /// Gets the active interceptors.
         /// </summary>
-        public IList<IInterceptor> Interceptors { get; } = new List<IInterceptor>();
+        public IInterceptor[] Interceptors
+        {
+            get
+            {
+                lock (_interceptors)
+                    return _interceptors.ToArray();
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to enable private factory injection.
@@ -35,13 +46,28 @@ namespace ViewPump
 
         #region Public Methods
         /// <summary>
+        /// Adds an interceptor.
+        /// </summary>
+        /// <param name="interceptor">The interceptor to add.</param>
+        public void AddInterceptor(IInterceptor interceptor)
+        {
+            if (!_interceptors.Contains(interceptor))
+                _interceptors.Add(interceptor);
+        }
+
+        /// <summary>
         /// Submits an InflateRequest to be inflated.
         /// </summary>
         /// <param name="inflateRequest">The inflater view request.</param>
         public InflateResult Inflate(InflateRequest inflateRequest)
-        {
-            return new InterceptorChain(new List<IInterceptor>(Interceptors) { new FallbackViewCreationInterceptor() }, 0, inflateRequest).Proceed(inflateRequest);
-        }
+            => new InterceptorChain(new List<IInterceptor>(Interceptors) { new FallbackViewCreationInterceptor() }, 0, inflateRequest).Proceed(inflateRequest);
+
+        /// <summary>
+        /// Removes an interceptor.
+        /// </summary>
+        /// <param name="interceptor">The interceptor to remove.</param>
+        public void RemoveInterceptor(IInterceptor interceptor)
+            => _interceptors.Remove(interceptor);
         #endregion
     }
 }

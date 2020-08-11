@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ViewPump.Inflation;
+﻿using ViewPump.Inflation;
 using ViewPump.Intercepting;
 
 namespace ViewPump
@@ -15,7 +14,7 @@ namespace ViewPump
         /// <summary>
         /// Gets the active interceptors.
         /// </summary>
-        IList<IInterceptor> Interceptors { get; }
+        IInterceptor[] Interceptors { get; }
 
         /// <summary>
         /// Gets or sets whether to enable private factory injection.
@@ -35,10 +34,22 @@ namespace ViewPump
 
         #region Public Methods
         /// <summary>
+        /// Adds an interceptor.
+        /// </summary>
+        /// <param name="interceptor">The interceptor to add.</param>
+        public void AddInterceptor(IInterceptor interceptor);
+
+        /// <summary>
         /// Submits an InflateRequest to be inflated.
         /// </summary>
         /// <param name="inflateRequest">The inflater view request.</param>
         InflateResult Inflate(InflateRequest inflateRequest);
+
+        /// <summary>
+        /// Removes an interceptor.
+        /// </summary>
+        /// <param name="interceptor">The interceptor to remove.</param>
+        public void RemoveInterceptor(IInterceptor interceptor);
         #endregion
     }
 }
