@@ -10,11 +10,11 @@ namespace Sample.App.Interceptors
         {
             var result = chain.Proceed();
 
-            if (!(result.View is TextView textView))
-                return result;
-
-            textView.SetTextAppearance(Resource.Style.Base_TextAppearance_AppCompat_Large);
-            textView.SetTextColor(Color.Red);
+            if (result.View is TextView textView)
+            {
+                textView.SetTextAppearance(Resource.Style.Base_TextAppearance_AppCompat_Large);
+                textView.SetTextColor(Color.Red);
+            }
 
             return result;
         }

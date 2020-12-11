@@ -1,6 +1,5 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.Support.V4.OS;
 using Android.Util;
 using Android.Views;
 using Java.Interop;
@@ -24,7 +23,7 @@ namespace ViewPump.Inflation
         /// <summary>
         /// Gets whether the Android version is at least Android 10/Q.
         /// </summary>
-        public bool IsAtLeastQ => Build.VERSION.SdkInt > BuildVersionCodes.P || BuildCompat.IsAtLeastQ;
+        public bool IsAtLeastQ => Build.VERSION.SdkInt > BuildVersionCodes.P;
 
         /// <summary>
         /// Gets the name and attributes view creator.

@@ -1,6 +1,6 @@
 ﻿using Android.Content.Res;
 using Android.Graphics;
-using Android.Support.Design.Widget;
+using Google.Android.Material.TextField;
 using ViewPump.Intercepting;
 
 namespace Sample.App.Interceptors
@@ -11,22 +11,22 @@ namespace Sample.App.Interceptors
         {
             var result = chain.Proceed();
 
-            if (!(result.View is TextInputLayout textInputLayout))
-                return result;
-
-            var hintStates = new int[][]
+            if (result.View is TextInputLayout textInputLayout)
+            {
+                var hintStates = new int[][]
             {
                 new[] { Android.Resource.Attribute.StateFocused },
                 new[] { -Android.Resource.Attribute.StateFocused }
             };
 
-            var hintColors = new int[]
-            {
+                var hintColors = new int[]
+                {
                 Color.Green,
                 Color.Gray
-            };
+                };
 
-            textInputLayout.DefaultHintTextColor = new ColorStateList(hintStates, hintColors);
+                textInputLayout.DefaultHintTextColor = new ColorStateList(hintStates, hintColors);
+            }
 
             return result;
         }

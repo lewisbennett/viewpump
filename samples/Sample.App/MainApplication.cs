@@ -15,10 +15,10 @@ namespace Sample.App
 
             ViewPumpService.Init();
 
-            ViewPumpService.Instance.Interceptors.Add(new CardViewInterceptor());
-            ViewPumpService.Instance.Interceptors.Add(new EditTextInterceptor());
-            ViewPumpService.Instance.Interceptors.Add(new TextInputLayoutInterceptor());
-            ViewPumpService.Instance.Interceptors.Add(new TextViewInterceptor());
+            ViewPumpService.Instance.AddInterceptor(new CardViewInterceptor());
+            ViewPumpService.Instance.AddInterceptor(new EditTextInterceptor());
+            ViewPumpService.Instance.AddInterceptor(new TextInputLayoutInterceptor());
+            ViewPumpService.Instance.AddInterceptor(new TextViewInterceptor());
         }
 
         public MainApplication()
