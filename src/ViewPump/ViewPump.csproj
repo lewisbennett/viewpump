@@ -1,8 +1,8 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>monoandroid90;monoandroid10.0</TargetFrameworks>
-    <LangVersion>8</LangVersion>
+    <TargetFrameworks>monoandroid10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
@@ -14,6 +14,8 @@
     <Description>View inflation interception in Xamarin.Android.</Description>
     <RepositoryUrl>https://github.com/lewisbennett/viewpump</RepositoryUrl>
     <PackageProjectUrl>https://github.com/lewisbennett/viewpump</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
@@ -32,6 +34,13 @@
     <Compile Include="Intercepting\**\*.cs" />
     <AndroidResource Include="Resources\**\*.xml" />
 	<PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
