@@ -1,48 +1,54 @@
-﻿using ViewPump.Intercepting;
+﻿using Android.Content;
+using Android.Util;
+using Android.Views;
+using System;
+using ViewPump.Events;
+using ViewPump.ViewCreators.Base;
 
 namespace ViewPump.Base
 {
     public abstract class BaseInterceptingService : IInterceptingService
     {
-        #region Fields
-        private readonly List<IInterceptor> _interceptors = new();
+        #region Events
+        public event EventHandler<InflateRequestedEventArgs> InflateRequested;
+        public event EventHandler<ViewInflatedEventArgs> ViewInflated;
         #endregion
 
         #region Public Methods
         /// <summary>
-        /// Adds an interceptor.
+        /// Inflates a view.
         /// </summary>
-        /// <param name="interceptor">The interceptor.</param>
-        public void AddInterceptor(IInterceptor interceptor)
+        /// <param name="viewCreator">The <see cref="IViewCreator" /> in charge of creating the view.</param>
+        /// <param name="context">The context that the view will be inflated in</param>
+        /// <param name="attrs">The attributes to apply to the view</param>
+        /// <param name="name">The fully qualified name of the view being inflated.</param>
+        /// <param name="parent">The view's parent, if any.</param>
+        public virtual View Inflate(IViewCreator viewCreator, Context context, IAttributeSet attrs, string name, View parent)
         {
-            if (!_interceptors.Contains(interceptor))
+            InflateRequested?.Invoke(this, new InflateRequestedEventArgs(context, attrs, name, parent));
+
+            View view = null;
+
+            if (InterceptingService.Delegate != null && InterceptingService.Delegate.OnInflateRequested(context, attrs, name, parent))
             {
-                lock (_interceptors)
-                    _interceptors.Add(interceptor);
+                view = viewCreator.OnCreateView(parent, name, context, attrs);
+
+                // Try to assign the correct view name for the benefit of the below events.
+                name = view?.Class?.Name ?? name;
+
+                ViewInflated?.Invoke(this, new ViewInflatedEventArgs(context, attrs, name, view));
+
+                InterceptingService.Delegate.OnViewInflated(context, attrs, name, view);
             }
+
+            return view;
         }
 
         /// <summary>
-        /// Gets the interceptors that are registered with the service.
+        /// Provides a <see cref="ContextWrapper" /> for the supplied <see cref="Context" />.
         /// </summary>
-        public IInterceptor[] GetInterceptors()
-        {
-            lock (_interceptors)
-                return _interceptors.ToArray();
-        }
-
-        /// <summary>
-        /// Removes an interceptor.
-        /// </summary>
-        /// <param name="interceptor">The interceptor.</param>
-        public void RemoveInterceptor(IInterceptor interceptor)
-        {
-            if (_interceptors.Contains(interceptor))
-            {
-                lock (_interceptors)
-                    _interceptors.Remove(interceptor);
-            }
-        }
+        /// <param name="context">The context to wrap.</param>
+        public abstract ContextWrapper WrapContext(Context context);
         #endregion
     }
 }

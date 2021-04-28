@@ -31,8 +31,9 @@
   <ItemGroup>
     <Compile Include="*.cs" />
 	<Compile Include="Base\**\*.cs" />
+	<Compile Include="Events\**\*.cs" />
 	<Compile Include="Infrastructure\**\*.cs" />
-	<Compile Include="Intercepting\**\*.cs" />
+	<Compile Include="ViewCreators\**\*.cs" />
 	<PackageReference Include="Xamarin.Google.Android.Material" Version="1.3.0.1" />
   </ItemGroup>
 

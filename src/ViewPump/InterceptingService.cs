@@ -1,10 +1,21 @@
-﻿using ViewPump.Infrastructure;
+﻿using ViewPump.Base;
+using ViewPump.Infrastructure;
 
 namespace ViewPump
 {
     public static class InterceptingService
     {
         #region Properties
+        /// <summary>
+        /// Gets or sets the intercepting delegate, if any.
+        /// </summary>
+        public static IInterceptingDelegate Delegate
+        {
+            get => InterceptingServiceCore.Delegate;
+
+            set => InterceptingServiceCore.Delegate = value;
+        }
+
         /// <summary>
         /// Gets the intercepting service instance.
         /// </summary>
