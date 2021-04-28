@@ -1,12 +1,24 @@
 ﻿using Android.Content;
+using Android.OS;
 using Android.Util;
 using Android.Views;
+using Java.Interop;
+using System.Reflection;
 using System.Xml;
+using ViewPump.Infrastructure.Factories;
+using ViewPump.ViewCreators;
+using Java_Object = Java.Lang.Object;
 
 namespace ViewPump.Infrastructure
 {
     public class ViewPumpLayoutInflater : LayoutInflater
     {
+        #region Fields
+        private readonly NameViewCreator _nameViewCreator;
+        private readonly ParentNameViewCreator _parentNameViewCreator;
+        private bool _hasSetPrivateFactory;
+        #endregion
+
         #region Event Handlers
         /// <summary>
         /// This routine is for creating the correct subclass of View given the XML element name.
@@ -15,7 +27,7 @@ namespace ViewPump.Infrastructure
         /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
         protected override View OnCreateView(string name, IAttributeSet attrs)
         {
-            return InterceptingService.Instance.Inflate(Context, attrs, name, null);
+            return InterceptingService.Instance.Inflate(_nameViewCreator, Context, attrs, name, null);
         }
 
         /// <summary>
@@ -26,7 +38,7 @@ namespace ViewPump.Infrastructure
         /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
         protected override View OnCreateView(View parent, string name, IAttributeSet attrs)
         {
-            return InterceptingService.Instance.Inflate(Context, attrs, name, parent);
+            return InterceptingService.Instance.Inflate(_parentNameViewCreator, Context, attrs, name, parent);
         }
         #endregion
 
@@ -78,6 +90,47 @@ namespace ViewPump.Infrastructure
         }
 
         /// <summary>
+        /// Inflates a custom view.
+        /// </summary>
+        /// <param name="view">A previous attempt at inflating the view using factories, or null.</param>
+        /// <param name="name">The fully qualified class name of the View to be created.</param>
+        /// <param name="context">The context that the view will be inflated in.</param>
+        /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        public virtual View InflateCustomView(View view, string name, Context context, IAttributeSet attrs)
+        {
+            // If the view has already been created, or the view name doesn't seem to be a subclass, return the view/null.
+            if (view != null || (name != null && !name.Contains('.')))
+                return view;
+
+            // Create the view differently if on or above Android Q.
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
+                return CloneInContext(context).CreateView(name, null, attrs);
+
+            if (typeof(LayoutInflater).GetField("mConstructorArgs") is FieldInfo field && field.GetValue(this) is Java_Object[] constructorArgs)
+            {
+                var previousContext = constructorArgs[0];
+                constructorArgs[0] = context;
+
+                field.TrySet(this, constructorArgs);
+
+                try
+                {
+                    view = CreateView(name, null, attrs);
+                }
+                catch
+                {
+                    // Ignore.
+                }
+
+                constructorArgs[0] = previousContext;
+
+                field.TrySet(this, constructorArgs);
+            }
+
+            return view;
+        }
+
+        /// <summary>
         /// Inflate a new view hierarchy from the specified XML resource.
         /// </summary>
         /// <param name="resource">ID for an XML layout resource to load (e.g. Resource.Layout.main_page).</param>
@@ -87,8 +140,8 @@ namespace ViewPump.Infrastructure
         {
             var view = base.Inflate(resource, root, attachToRoot);
 
-            if (view != null && )
-                // Set tag stuff
+            if (view != null)
+                view.SetTag(Resource.Id.viewpump_layout_res, resource);
 
             return view;
         }
@@ -101,9 +154,35 @@ namespace ViewPump.Infrastructure
         /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
         public override View Inflate(XmlReader parser, ViewGroup root, bool attachToRoot)
         {
-            // Set something.
+            if (!_hasSetPrivateFactory)
+            {
+                if (Context is IFactory2 factory2)
+                    typeof(LayoutInflater).GetMethod("setPrivateFactory").TryInvokeMethod(this, new PrivateViewPumpFactory2(factory2, this));
+
+                _hasSetPrivateFactory = true;
+            }
 
             return base.Inflate(parser, root, attachToRoot);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="LayoutInflater.IFactory" />.
+        /// </summary>
+        /// <param name="factory">The factory</param>
+        [Export("setFactory")]
+        public void SetFactory(IFactory factory)
+        {
+            Factory = factory is ViewPumpFactory ? factory : new ViewPumpFactory(factory);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="LayoutInflater.IFactory2" />.
+        /// </summary>
+        /// <param name="factory2">The factory.</param>
+        [Export("setFactory2")]
+        public void SetFactory2(IFactory2 factory2)
+        {
+            Factory2 = factory2 is ViewPumpFactory2 ? factory2 : new ViewPumpFactory2(factory2);
         }
         #endregion
 
@@ -111,6 +190,8 @@ namespace ViewPump.Infrastructure
         internal ViewPumpLayoutInflater(LayoutInflater original, Context context)
             : base(original, context)
         {
+            _nameViewCreator = new NameViewCreator(this);
+            _parentNameViewCreator = new ParentNameViewCreator(this);
         }
         #endregion
     }
