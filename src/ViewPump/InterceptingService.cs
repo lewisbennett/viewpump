@@ -7,6 +7,11 @@ namespace ViewPump
     {
         #region Properties
         /// <summary>
+        /// Gets or sets whether or not to enable custom view creation.
+        /// </summary>
+        public static bool CustomViewCreation { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the intercepting delegate, if any.
         /// </summary>
         public static IInterceptingDelegate Delegate
@@ -20,6 +25,16 @@ namespace ViewPump
         /// Gets the intercepting service instance.
         /// </summary>
         public static IInterceptingService Instance => InterceptingServiceCore.Instance;
+
+        /// <summary>
+        /// Gets or sets whether or not to enable private factory injection.
+        /// </summary>
+        public static bool PrivateFactoryInjection { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether or not to store the layout resource ID as the tag on inflated views.
+        /// </summary>
+        public static bool StoreLayoutResID { get; set; }
         #endregion
 
         #region Public Methods

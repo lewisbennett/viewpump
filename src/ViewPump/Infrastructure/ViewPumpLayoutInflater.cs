@@ -100,7 +100,7 @@ namespace ViewPump.Infrastructure
         public virtual View InflateCustomView(View view, string name, Context context, IAttributeSet attrs)
         {
             // If the view has already been created, or the view name doesn't seem to be a subclass, return the view/null.
-            if (view != null || (name != null && !name.Contains('.')))
+            if (!InterceptingService.CustomViewCreation || view != null || (name != null && !name.Contains('.')))
                 return view;
 
             // Create the view differently if on or above Android Q.
@@ -145,7 +145,7 @@ namespace ViewPump.Infrastructure
         {
             var view = base.Inflate(resource, root, attachToRoot);
 
-            if (view != null)
+            if (view != null && InterceptingService.StoreLayoutResID)
                 view.SetTag(Resource.Id.viewpump_layout_res, resource);
 
             return view;
@@ -159,7 +159,7 @@ namespace ViewPump.Infrastructure
         /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
         public override View Inflate(XmlReader parser, ViewGroup root, bool attachToRoot)
         {
-            if (!_hasSetPrivateFactory)
+            if (!_hasSetPrivateFactory && InterceptingService.PrivateFactoryInjection)
             {
                 if (Context is IFactory2 factory2)
                 {
