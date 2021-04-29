@@ -29,7 +29,7 @@ namespace ViewPump.Base
 
             View view = null;
 
-            if (InterceptingService.Delegate != null && InterceptingService.Delegate.OnInflateRequested(context, attrs, name, parent))
+            if (InterceptingService.Delegate == null || InterceptingService.Delegate.OnInflateRequested(context, attrs, name, parent))
             {
                 view = viewCreator.OnCreateView(parent, name, context, attrs);
 
