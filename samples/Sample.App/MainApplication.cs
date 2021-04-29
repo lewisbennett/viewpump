@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Runtime;
-using Sample.App.Interceptors;
 using System;
 using ViewPump;
 
@@ -13,12 +12,9 @@ namespace Sample.App
         {
             base.OnCreate();
 
-            ViewPumpService.Init();
+            InterceptingService.Init();
 
-            ViewPumpService.Instance.AddInterceptor(new CardViewInterceptor());
-            ViewPumpService.Instance.AddInterceptor(new EditTextInterceptor());
-            ViewPumpService.Instance.AddInterceptor(new TextInputLayoutInterceptor());
-            ViewPumpService.Instance.AddInterceptor(new TextViewInterceptor());
+            InterceptingService.Delegate = new InterceptingDelegate();
         }
 
         public MainApplication()

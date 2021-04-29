@@ -3,10 +3,11 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Java.Interop;
-using System.Reflection;
+using Java.Lang.Reflect;
 using System.Xml;
 using ViewPump.Infrastructure.Factories;
 using ViewPump.ViewCreators;
+using Java_Class = Java.Lang.Class;
 using Java_Object = Java.Lang.Object;
 
 namespace ViewPump.Infrastructure
@@ -106,25 +107,30 @@ namespace ViewPump.Infrastructure
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
                 return CloneInContext(context).CreateView(name, null, attrs);
 
-            if (typeof(LayoutInflater).GetField("mConstructorArgs") is FieldInfo field && field.GetValue(this) is Java_Object[] constructorArgs)
+            if (Java_Class.FromType(typeof(LayoutInflater)).GetDeclaredField("mConstructorArgs") is Field field)
             {
-                var previousContext = constructorArgs[0];
-                constructorArgs[0] = context;
+                field.Accessible = true;
 
-                field.TrySet(this, constructorArgs);
-
-                try
+                if (field.Get(this) is object rawConstructorArgs && rawConstructorArgs is Java_Object[] constructorArgs)
                 {
-                    view = CreateView(name, null, attrs);
-                }
-                catch
-                {
-                    // Ignore.
-                }
+                    var previousContext = constructorArgs[0];
+                    constructorArgs[0] = context;
 
-                constructorArgs[0] = previousContext;
+                    field.TrySet(this, constructorArgs);
 
-                field.TrySet(this, constructorArgs);
+                    try
+                    {
+                        view = CreateView(name, null, attrs);
+                    }
+                    catch
+                    {
+                        // Ignore.
+                    }
+
+                    constructorArgs[0] = previousContext;
+
+                    field.TrySet(this, constructorArgs);
+                }
             }
 
             return view;
@@ -157,7 +163,13 @@ namespace ViewPump.Infrastructure
             if (!_hasSetPrivateFactory)
             {
                 if (Context is IFactory2 factory2)
-                    typeof(LayoutInflater).GetMethod("setPrivateFactory").TryInvokeMethod(this, new PrivateViewPumpFactory2(factory2, this));
+                {
+                    var setPrivateFactoryMethod = Java_Class.FromType(typeof(LayoutInflater)).GetMethod("setPrivateFactory", Java_Class.FromType(typeof(IFactory2)));
+
+                    setPrivateFactoryMethod.Accessible = true;
+
+                    setPrivateFactoryMethod.TryInvoke(this, new PrivateViewPumpFactory2(factory2, this));
+                }
 
                 _hasSetPrivateFactory = true;
             }

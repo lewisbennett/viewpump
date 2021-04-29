@@ -61,10 +61,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interceptors\CardViewInterceptor.cs" />
-    <Compile Include="Interceptors\EditTextInterceptor.cs" />
-    <Compile Include="Interceptors\TextInputLayoutInterceptor.cs" />
-    <Compile Include="Interceptors\TextViewInterceptor.cs" />
+    <Compile Include="InterceptingDelegate.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -103,15 +100,18 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Google.Android.Material">
-      <Version>1.2.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\src\ViewPump\ViewPump.csproj">
       <Project>{15c0d0ce-3d03-4f23-adb9-e862f83a0557}</Project>
       <Name>ViewPump</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.AndroidX.Arch.Core.Runtime">
+      <Version>2.1.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Google.Android.Material">
+      <Version>1.3.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

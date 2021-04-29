@@ -35,6 +35,7 @@
 	<Compile Include="Factories\**\*.cs" />
 	<Compile Include="Infrastructure\**\*.cs" />
 	<Compile Include="ViewCreators\**\*.cs" />
+	<AndroidResource Include="Resources\**\*.xml" />
 	<PackageReference Include="Xamarin.Google.Android.Material" Version="1.3.0.1" />
   </ItemGroup>
 

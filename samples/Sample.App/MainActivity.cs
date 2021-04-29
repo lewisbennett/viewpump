@@ -2,7 +2,7 @@
 using Android.Content;
 using Android.OS;
 using AndroidX.AppCompat.App;
-using ViewPump.Inflation;
+using ViewPump;
 
 namespace Sample.App
 {
@@ -18,7 +18,7 @@ namespace Sample.App
 
         protected override void AttachBaseContext(Context @base)
         {
-            base.AttachBaseContext(ViewPumpContextWrapper.Wrap(@base));
+            base.AttachBaseContext(InterceptingService.Instance.WrapContext(@base));
         }
     }
 }

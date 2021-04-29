@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Java.Lang.Reflect;
+using System;
 using System.Diagnostics;
-using System.Reflection;
+using Java_Object = Java.Lang.Object;
 
 namespace ViewPump
 {
@@ -12,7 +13,7 @@ namespace ViewPump
         /// </summary>
         /// <param name="target">The target object.</param>
         /// <param name="args">The method parameters.</param>
-        public static bool TryInvokeMethod(this MethodInfo method, object target, params object[] args)
+        public static bool TryInvoke(this Method method, Java_Object target, params Java_Object[] args)
         {
             try
             {
@@ -34,11 +35,11 @@ namespace ViewPump
         /// </summary>
         /// <param name="target">The target object.</param>
         /// <param name="value">The value to set.</param>
-        public static bool TrySet(this FieldInfo field, object target, object value)
+        public static bool TrySet(this Field field, Java_Object target, Java_Object value)
         {
             try
             {
-                field.SetValue(target, value);
+                field.Set(target, value);
 
                 return true;
             }

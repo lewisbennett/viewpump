@@ -1,4 +1,6 @@
-﻿namespace ViewPump.Infrastructure
+﻿using ViewPump.Base;
+
+namespace ViewPump.Infrastructure
 {
     public static class InterceptingServiceCore
     {
