@@ -12,8 +12,12 @@ namespace Sample.App
         {
             base.OnCreate();
 
+            // Initialize the intercepting service.
             InterceptingService.Init();
 
+            // Provide the intercepting service with a custom intercepting delegate.
+            // This allows us to be notified when views are about to be, and after they have been inflated.
+            // The delegate also allows us to control whether certain views should be allowed to be inflated.
             InterceptingService.Delegate = new InterceptingDelegate();
         }
 

@@ -18,6 +18,10 @@ namespace Sample.App
 
         protected override void AttachBaseContext(Context @base)
         {
+            // In order for ViewPump to intercept the view inflation process, we must wrap the
+            // activity's context in one managed by the intercepting service.
+            // A good option here would be to include this in a BaseActivity file, that all of
+            // your activities then inherit from.
             base.AttachBaseContext(InterceptingService.Instance.WrapContext(@base));
         }
     }

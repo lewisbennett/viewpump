@@ -23,6 +23,9 @@ namespace Sample.App
         /// <param name="parent">The view's parent, if any.</param>
         public bool OnInflateRequested(Context context, IAttributeSet attrs, string name, View parent)
         {
+            // Return true to allow every view to be inflated.
+            // False can also be returned which will prevent the view from being inflated,
+            // but may result in unexpected behaviour.
             return true;
         }
 
@@ -37,6 +40,7 @@ namespace Sample.App
         {
             switch (view)
             {
+                // Modify CardView's.
                 case CardView cardView:
 
                     cardView.CardBackgroundColor = ColorStateList.ValueOf(Color.LightGray);
@@ -44,6 +48,7 @@ namespace Sample.App
 
                     return;
 
+                // Modify EditText's.
                 case EditText editText:
 
                     var states = new int[][]
@@ -72,6 +77,7 @@ namespace Sample.App
 
                     return;
 
+                // Modify TextInputLayout's.
                 case TextInputLayout textInputLayout:
 
                     var hintStates = new int[][]
@@ -90,6 +96,7 @@ namespace Sample.App
 
                     return;
 
+                // Modify TextView's.
                 case TextView textView:
 
                     if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
