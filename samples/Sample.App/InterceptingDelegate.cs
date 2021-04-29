@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.OS;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -60,7 +61,9 @@ namespace Sample.App
                     var colorStateList = new ColorStateList(states, colors);
 
                     editText.BackgroundTintList = colorStateList;
-                    editText.CompoundDrawableTintList = colorStateList;
+
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+                        editText.CompoundDrawableTintList = colorStateList;
 
                     editText.SetTextColor(Color.Black);
 
@@ -89,7 +92,9 @@ namespace Sample.App
 
                 case TextView textView:
 
-                    textView.SetTextAppearance(Resource.Style.Base_TextAppearance_AppCompat_Large);
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+                        textView.SetTextAppearance(Resource.Style.Base_TextAppearance_AppCompat_Large);
+
                     textView.SetTextColor(Color.Red);
 
                     return;

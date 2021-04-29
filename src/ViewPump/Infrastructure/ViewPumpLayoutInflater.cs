@@ -111,26 +111,25 @@ namespace ViewPump.Infrastructure
             {
                 field.Accessible = true;
 
-                if (field.Get(this) is object rawConstructorArgs && rawConstructorArgs is Java_Object[] constructorArgs)
+                var constructorArgs = (Java_Object[])field.Get(this);
+
+                var previousContext = constructorArgs[0];
+                constructorArgs[0] = context;
+
+                field.TrySet(this, constructorArgs);
+
+                try
                 {
-                    var previousContext = constructorArgs[0];
-                    constructorArgs[0] = context;
-
-                    field.TrySet(this, constructorArgs);
-
-                    try
-                    {
-                        view = CreateView(name, null, attrs);
-                    }
-                    catch
-                    {
-                        // Ignore.
-                    }
-
-                    constructorArgs[0] = previousContext;
-
-                    field.TrySet(this, constructorArgs);
+                    view = CreateView(name, null, attrs);
                 }
+                catch
+                {
+                    // Ignore.
+                }
+
+                constructorArgs[0] = previousContext;
+
+                field.TrySet(this, constructorArgs);
             }
 
             return view;
