@@ -6,7 +6,7 @@
 
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
-    <Version>0.1.0</Version>
+    <Version>0.99.0-alpha</Version>
     <Authors>Lewis Bennett</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <UserSecretsId>f9fc9907-4aa0-4877-9a9d-e4bb4b36a006</UserSecretsId>
@@ -16,6 +16,7 @@
     <PackageProjectUrl>https://github.com/lewisbennett/viewpump</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>view,intercept,inflate,inflation,intercepting,layoutinflater</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
