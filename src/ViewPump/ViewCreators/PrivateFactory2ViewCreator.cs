@@ -22,7 +22,7 @@ namespace ViewPump.ViewCreators
         /// <param name="attrs">The attributes to apply to the view.</param>
         public override View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
         {
-            return LayoutInflater.InflateCustomView(_factory2.OnCreateView(parent, name, context, attrs), name, context, attrs);
+            return LayoutInflater.InflateCustomView(parent, _factory2.OnCreateView(parent, name, context, attrs), name, context, attrs);
         }
         #endregion
 

@@ -33,12 +33,15 @@ namespace ViewPump.Base
             {
                 view = viewCreator.OnCreateView(parent, name, context, attrs);
 
-                // Try to assign the correct view name for the benefit of the below events.
-                name = view?.Class?.Name ?? name;
+                if (view != null)
+                {
+                    // Try to assign the correct view name for the benefit of the below events.
+                    name = view.Class?.Name ?? name;
 
-                ViewInflated?.Invoke(this, new ViewInflatedEventArgs(context, attrs, name, view));
+                    ViewInflated?.Invoke(this, new ViewInflatedEventArgs(context, attrs, name, view));
 
-                InterceptingService.Delegate.OnViewInflated(context, attrs, name, view);
+                    InterceptingService.Delegate?.OnViewInflated(context, attrs, name, view);
+                }
             }
 
             return view;

@@ -3,7 +3,9 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Java.Interop;
+using Java.Lang;
 using Java.Lang.Reflect;
+using System;
 using System.Xml;
 using ViewPump.Infrastructure.Factories;
 using ViewPump.ViewCreators;
@@ -15,32 +17,10 @@ namespace ViewPump.Infrastructure
     public class ViewPumpLayoutInflater : LayoutInflater
     {
         #region Fields
+        private Field _constructorArgsField;
+        private bool _hasSetPrivateFactory;
         private readonly NameViewCreator _nameViewCreator;
         private readonly ParentNameViewCreator _parentNameViewCreator;
-        private bool _hasSetPrivateFactory;
-        #endregion
-
-        #region Event Handlers
-        /// <summary>
-        /// This routine is for creating the correct subclass of View given the XML element name.
-        /// </summary>
-        /// <param name="name">The fully qualified class name of the View to be created.</param>
-        /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
-        protected override View OnCreateView(string name, IAttributeSet attrs)
-        {
-            return InterceptingService.Instance.Inflate(_nameViewCreator, Context, attrs, name, null);
-        }
-
-        /// <summary>
-        /// Version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future parent of the view being constructed.
-        /// </summary>
-        /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
-        /// <param name="name">The fully qualified class name of the View to be created.</param>
-        /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
-        protected override View OnCreateView(View parent, string name, IAttributeSet attrs)
-        {
-            return InterceptingService.Instance.Inflate(_parentNameViewCreator, Context, attrs, name, parent);
-        }
         #endregion
 
         #region Public Methods
@@ -93,43 +73,36 @@ namespace ViewPump.Infrastructure
         /// <summary>
         /// Inflates a custom view.
         /// </summary>
+        /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
         /// <param name="view">A previous attempt at inflating the view using factories, or null.</param>
         /// <param name="name">The fully qualified class name of the View to be created.</param>
         /// <param name="context">The context that the view will be inflated in.</param>
         /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
-        public virtual View InflateCustomView(View view, string name, Context context, IAttributeSet attrs)
+        public virtual View InflateCustomView(View parent, View view, string name, Context context, IAttributeSet attrs)
         {
-            // If the view has already been created, or the view name doesn't seem to be a subclass, return the view/null.
-            if (!InterceptingService.CustomViewCreation || view != null || (name != null && !name.Contains('.')))
-                return view;
-
-            // Create the view differently if on or above Android Q.
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.Q)
-                return CloneInContext(context).CreateView(name, null, attrs);
-
-            if (Java_Class.FromType(typeof(LayoutInflater)).GetDeclaredField("mConstructorArgs") is Field field)
+            if (view == null && name != null && name.Contains('.'))
             {
-                field.Accessible = true;
+                // Attempt to inflate the view, but ignore internal views.
+                if (!name.StartsWith("com.android.internal.", StringComparison.InvariantCulture))
+                    view = _parentNameViewCreator.OnCreateView(parent, name, context, attrs);
 
-                var constructorArgs = (Java_Object[])field.Get(this);
-
-                var previousContext = constructorArgs[0];
-                constructorArgs[0] = context;
-
-                field.TrySet(this, constructorArgs);
-
-                try
+                if (view == null)
                 {
-                    view = CreateView(name, null, attrs);
-                }
-                catch
-                {
-                    // Ignore.
-                }
+                    var (constructorArgs, previousContext) = GetConstructorArgs(context);
 
-                constructorArgs[0] = previousContext;
-
-                field.TrySet(this, constructorArgs);
+                    try
+                    {
+                        view = CreateViewCompat(context, name, attrs);
+                    }
+                    catch (ClassNotFoundException)
+                    {
+                        // Ignore.
+                    }
+                    finally
+                    {
+                        RestoreConstructorArgs(constructorArgs, previousContext);
+                    }
+                }
             }
 
             return view;
@@ -143,6 +116,8 @@ namespace ViewPump.Infrastructure
         /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
         public override View Inflate(int resource, ViewGroup root, bool attachToRoot)
         {
+            SetPrivateFactory();
+
             var view = base.Inflate(resource, root, attachToRoot);
 
             if (view != null && InterceptingService.StoreLayoutResID)
@@ -159,21 +134,30 @@ namespace ViewPump.Infrastructure
         /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
         public override View Inflate(XmlReader parser, ViewGroup root, bool attachToRoot)
         {
-            if (!_hasSetPrivateFactory && InterceptingService.PrivateFactoryInjection)
-            {
-                if (Context is IFactory2 factory2)
-                {
-                    var setPrivateFactoryMethod = Java_Class.FromType(typeof(LayoutInflater)).GetMethod("setPrivateFactory", Java_Class.FromType(typeof(IFactory2)));
-
-                    setPrivateFactoryMethod.Accessible = true;
-
-                    setPrivateFactoryMethod.TryInvoke(this, new PrivateViewPumpFactory2(factory2, this));
-                }
-
-                _hasSetPrivateFactory = true;
-            }
+            SetPrivateFactory();
 
             return base.Inflate(parser, root, attachToRoot);
+        }
+
+        /// <summary>
+        /// This routine is for creating the correct subclass of View given the XML element name.
+        /// </summary>
+        /// <param name="name">The fully qualified class name of the View to be created.</param>
+        /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        protected override View OnCreateView(string name, IAttributeSet attrs)
+        {
+            return InterceptingService.Instance.Inflate(_nameViewCreator, Context, attrs, name, null);
+        }
+
+        /// <summary>
+        /// Version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future parent of the view being constructed.
+        /// </summary>
+        /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
+        /// <param name="name">The fully qualified class name of the View to be created.</param>
+        /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        protected override View OnCreateView(View parent, string name, IAttributeSet attrs)
+        {
+            return InterceptingService.Instance.Inflate(_parentNameViewCreator, Context, attrs, name, parent);
         }
 
         /// <summary>
@@ -203,6 +187,80 @@ namespace ViewPump.Infrastructure
         {
             _nameViewCreator = new NameViewCreator(this);
             _parentNameViewCreator = new ParentNameViewCreator(this);
+        }
+        #endregion
+
+        #region Private Methods
+        private View CreateViewCompat(Context context, string name, IAttributeSet attrs)
+        {
+            View view;
+
+#if __ANDROID_29__
+            if (Build.VERSION.SdkInt > BuildVersionCodes.P)
+                view = CreateView(context, name, null, attrs);
+            else
+#endif
+                view = CreateView(name, null, attrs);
+
+            return view;
+        }
+
+        private (Java_Object[], Java_Object) GetConstructorArgs(Context context)
+        {
+            if (Build.VERSION.SdkInt > BuildVersionCodes.P)
+                return (null, null);
+
+            if (_constructorArgsField == null)
+            {
+                _constructorArgsField = Java_Class.FromType(typeof(LayoutInflater)).GetDeclaredField("mConstructorArgs");
+
+                _constructorArgsField.Accessible = true;
+            }
+
+            var constructorArgs = (Java_Object[])_constructorArgsField.Get(this);
+
+            Java_Object previousContext = null;
+
+            if (constructorArgs != null)
+            {
+                previousContext = constructorArgs?[0];
+
+                constructorArgs[0] = context;
+
+                _constructorArgsField.Set(this, constructorArgs);
+            }
+
+            return (constructorArgs, previousContext);
+        }
+
+        private void RestoreConstructorArgs(Java_Object[] constructorArgs, Java_Object previousContext)
+        {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.Q && constructorArgs != null && previousContext != null)
+            {
+                constructorArgs[0] = previousContext;
+
+                _constructorArgsField.Set(this, constructorArgs);
+            }
+        }
+
+        private void SetPrivateFactory()
+        {
+            // LayoutInflater in Android versions greater than Honeycomb uses a private factory.
+            // Make sure that our custom layout inflater uses our private factory.
+
+            if (!_hasSetPrivateFactory && InterceptingService.PrivateFactoryInjection)
+            {
+                if (Context is IFactory2 factory2)
+                {
+                    var setPrivateFactoryMethod = Java_Class.FromType(typeof(LayoutInflater)).GetMethod("setPrivateFactory", Java_Class.FromType(typeof(IFactory2)));
+
+                    setPrivateFactoryMethod.Accessible = true;
+
+                    setPrivateFactoryMethod.TryInvoke(this, new PrivateViewPumpFactory2(factory2, this));
+                }
+
+                _hasSetPrivateFactory = true;
+            }
         }
         #endregion
     }
