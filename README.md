@@ -5,7 +5,7 @@
 
 ViewPump allows you to intercept the view inflation process. This library allows you to customize views on an app-wide scale without having to create sub-classes (although these are supported), both before and after the view itself has been inflated.
 
-Heavily based upon [InflationX' ViewPump](https://github.com/InflationX/ViewPump).
+Heavily based on [InflationX' ViewPump](https://github.com/InflationX/ViewPump).
 
 ## Getting Started
 
