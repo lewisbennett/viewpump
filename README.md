@@ -1,44 +1,36 @@
-<div align="center">
-
-[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg?style=flat-square)](https://raw.githubusercontent.com/lewisbennett/viewpump/master/README.md)
-
-</div>
+[![License: Apache](https://img.shields.io/badge/License-Apache-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GitHub forks](https://img.shields.io/nuget/dt/ViewPump.svg)](https://www.nuget.org/packages/ViewPump/)
 
 # ViewPump
 
-Intercept the view inflation process using [InflationX' ViewPump](https://github.com/InflationX/ViewPump) Android library in Xamarin.
+ViewPump allows you to intercept the view inflation process. This library allows you to customize views on an app-wide scale without having to create sub-classes (although these are supported), both before and after the view itself has been inflated.
 
-ViewPump allows you to intercept the view inflation process. This allows you to customise views on an app-wide scale without having to create sub-classes (although these are supported) both before and after the view itself has been inflated.
+Heavily based upon [InflationX' ViewPump](https://github.com/InflationX/ViewPump).
 
 ## Getting Started
 
-Get started by calling `ViewPump.ViewPumpService.Init()`. `Init()` has overflow methods where you can provide your own `IViewPumpService` should you wish to do so.
+Install ViewPump from [NuGet](https://www.nuget.org/packages/ViewPump/), or add a reference to `ViewPump`.
 
-In each of your Activity's you must override the protected method `AttachBaseContext` to allow ViewPump to wrap the context:
-```
-protected override void AttachBaseContext(Context @base)
-{
-    base.AttachBaseContext(ViewPumpContextWrapper.Wrap(@base));
-}
-```
+At the entry point for your app, call `ViewPump.InterceptingService.Init(...)`. You can optionally provide your own [`IInterceptingService`](https://github.com/lewisbennett/viewpump/blob/release-1.0.0/src/ViewPump/Base/IInterceptingService.cs) implementation.
 
 ## Intercepting
 
-To begin intercepting, implement `ViewPump.Intercepting.IInterceptor`. You'll then have access to the `Intercept` method. When this method is called the view hasn't yet been inflated. To inflate the view simply call on the provided `ViewPump.Intercepting.IChain`:
+The view inflation process can be intercepted with two methods:
+
+### Events
+
+`IInterceptingService` provides two events: [`InflateRequested`](https://github.com/lewisbennett/viewpump/blob/release-1.0.0/src/ViewPump/Base/IInterceptingService.cs#L13), and [`ViewInflated`](https://github.com/lewisbennett/viewpump/blob/release-1.0.0/src/ViewPump/Base/IInterceptingService.cs#L14).
+
+`InflateRequested` is triggered before a view is inflated, and `ViewInflated` is triggered after a view has been inflated. Both events provide custom event arguments that give you relevant information per the event. See [Events](https://github.com/lewisbennett/viewpump/tree/release-1.0.0/src/ViewPump/Events).
+
+### [IInterceptingDelegate](https://github.com/lewisbennett/viewpump/blob/release-1.0.0/src/ViewPump/Base/IInterceptingDelegate.cs)
+
+You can optionally provide an `IInterceptingDelegate` implementation by doing the following:
+
 ```
-public InflateResult Intercept(IChain chain)
-{
-    // The view has not yet been inflated.
-
-    var result = chain.Proceed();
-    
-    // The view has been inflated.
-    
-    return result;
-}
+ViewPump.InterceptingService.Delegate = new MyCustomInterceptingDelegate();
 ```
-Add your interceptor by calling `ViewPump.ViewPumpService.Instance.AddInterceptor(new MyCustomInterceptor())`.
 
-## Samples
+The delegate gives you methods that provide you with the same information as the aforementioned events. The key difference, though, is that [`IInterceptingDelegate.OnInflateRequested`](https://github.com/lewisbennett/viewpump/blob/release-1.0.0/src/ViewPump/Base/IInterceptingDelegate.cs#L17) returns a `bool`. This allows you to deny the inflation of particular views however, there may be side effects as a result of doing so.
 
-See [samples](https://github.com/lewisbennett/viewpump/tree/master/samples) for examples.
+## [Android sample project](https://github.com/lewisbennett/viewpump/tree/release-1.0.0/samples/Sample.App)
