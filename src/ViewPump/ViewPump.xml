@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ViewPump</name>
+    </assembly>
+    <members>
+        <member name="M:ViewPump.Extensions.TryInvoke(Java.Lang.Reflect.Method,Java.Lang.Object,Java.Lang.Object[])">
+            <summary>
+            Tries to invoke a method.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="args">The method parameters.</param>
+        </member>
+        <member name="M:ViewPump.Extensions.TrySet(Java.Lang.Reflect.Field,Java.Lang.Object,Java.Lang.Object)">
+            <summary>
+            Tries to set the value of the field.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="value">The value to set.</param>
+        </member>
+        <member name="P:ViewPump.InterceptingService.CustomViewCreation">
+            <summary>
+            Gets or sets whether or not to enable custom view creation.
+            </summary>
+        </member>
+        <member name="P:ViewPump.InterceptingService.Delegate">
+            <summary>
+            Gets or sets the intercepting delegate, if any.
+            </summary>
+        </member>
+        <member name="P:ViewPump.InterceptingService.Instance">
+            <summary>
+            Gets the intercepting service instance.
+            </summary>
+        </member>
+        <member name="P:ViewPump.InterceptingService.PrivateFactoryInjection">
+            <summary>
+            Gets or sets whether or not to enable private factory injection.
+            </summary>
+        </member>
+        <member name="P:ViewPump.InterceptingService.StoreLayoutResID">
+            <summary>
+            Gets or sets whether or not to store the layout resource ID as the tag on inflated views.
+            </summary>
+        </member>
+        <member name="M:ViewPump.InterceptingService.Init">
+            <summary>
+            Initialize the intercepting service.
+            </summary>
+        </member>
+        <member name="M:ViewPump.InterceptingService.Init(ViewPump.Base.IInterceptingService)">
+            <summary>
+            Initialize the intercepting service.
+            </summary>
+            <param name="interceptingService">A custom intercepting service.</param>
+        </member>
+        <member name="M:ViewPump.Base.BaseInterceptingService.Inflate(ViewPump.ViewCreators.Base.IViewCreator,Android.Content.Context,Android.Util.IAttributeSet,System.String,Android.Views.View)">
+            <summary>
+            Inflates a view.
+            </summary>
+            <param name="viewCreator">The <see cref="T:ViewPump.ViewCreators.Base.IViewCreator" /> in charge of creating the view.</param>
+            <param name="context">The context that the view will be inflated in</param>
+            <param name="attrs">The attributes to apply to the view</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="parent">The view's parent, if any.</param>
+        </member>
+        <member name="M:ViewPump.Base.BaseInterceptingService.WrapContext(Android.Content.Context)">
+            <summary>
+            Provides a <see cref="T:Android.Content.ContextWrapper" /> for the supplied <see cref="T:Android.Content.Context" />.
+            </summary>
+            <param name="context">The context to wrap.</param>
+        </member>
+        <member name="M:ViewPump.Base.IInterceptingDelegate.OnInflateRequested(Android.Content.Context,Android.Util.IAttributeSet,System.String,Android.Views.View)">
+            <summary>
+            Called before a view is inflated.
+            </summary>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="parent">The view's parent, if any.</param>
+        </member>
+        <member name="M:ViewPump.Base.IInterceptingDelegate.OnViewInflated(Android.Content.Context,Android.Util.IAttributeSet,System.String,Android.Views.View)">
+            <summary>
+            Called when a view has been inflated.
+            </summary>
+            <param name="context">The context that the view exists within.</param>
+            <param name="attrs">The attributes applied to the view.</param>
+            <param name="name">The fully qualified name of the view.</param>
+            <param name="view">The inflated view.</param>
+        </member>
+        <member name="M:ViewPump.Base.IInterceptingService.Inflate(ViewPump.ViewCreators.Base.IViewCreator,Android.Content.Context,Android.Util.IAttributeSet,System.String,Android.Views.View)">
+            <summary>
+            Inflates a view.
+            </summary>
+            <param name="viewCreator">The <see cref="T:ViewPump.ViewCreators.Base.IViewCreator" /> in charge of creating the view.</param>
+            <param name="context">The context that the view will be inflated in</param>
+            <param name="attrs">The attributes to apply to the view</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="parent">The view's parent, if any.</param>
+        </member>
+        <member name="M:ViewPump.Base.IInterceptingService.WrapContext(Android.Content.Context)">
+            <summary>
+            Provides a <see cref="T:Android.Content.ContextWrapper" /> for the supplied <see cref="T:Android.Content.Context" />.
+            </summary>
+            <param name="context">The context to wrap.</param>
+        </member>
+        <member name="P:ViewPump.Events.InflateRequestedEventArgs.Context">
+            <summary>
+            Gets the context that the view will be inflated in.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.InflateRequestedEventArgs.Attrs">
+            <summary>
+            Gets the attributes to apply to the view.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.InflateRequestedEventArgs.Name">
+            <summary>
+            Gets the fully qualified name of the view being inflated.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.InflateRequestedEventArgs.Parent">
+            <summary>
+            Gets the view's parent, if any.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.ViewInflatedEventArgs.Context">
+            <summary>
+            Gets the context that the view exists within.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.ViewInflatedEventArgs.Attrs">
+            <summary>
+            Gets the attributes applied to the view.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.ViewInflatedEventArgs.Name">
+            <summary>
+            Gets the fully qualified name of the inflated view.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Events.ViewInflatedEventArgs.View">
+            <summary>
+            Gets the inflated view.
+            </summary>
+        </member>
+        <member name="M:ViewPump.Infrastructure.Factories.PrivateViewPumpFactory2.OnCreateView(System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.Factories.PrivateViewPumpFactory2.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.Factories.ViewPumpFactory.OnCreateView(System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.Factories.ViewPumpFactory2.OnCreateView(System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.Factories.ViewPumpFactory2.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="P:ViewPump.Infrastructure.InterceptingServiceCore.Delegate">
+            <summary>
+            Gets or sets the intercepting delegate, if any.
+            </summary>
+        </member>
+        <member name="P:ViewPump.Infrastructure.InterceptingServiceCore.Instance">
+            <summary>
+            Gets the intercepting service instance
+            </summary>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpContextWrapper.GetSystemService(System.String)">
+            <summary>
+            Return the handle to a system-level service by name.
+            </summary>
+            <param name="name">The name of the desired service.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpInterceptingService.WrapContext(Android.Content.Context)">
+            <summary>
+            Provides a <see cref="T:Android.Content.ContextWrapper" /> for the supplied <see cref="T:Android.Content.Context" />.
+            </summary>
+            <param name="context">The context to wrap.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.BaseOnCreateView(System.String,Android.Util.IAttributeSet)">
+            <summary>
+            Invokes the base routine for creating the correct subclass of View given the XML element name.
+            </summary>
+            <param name="name">The fully qualified class name of the View to be created.</param>
+            <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.BaseOnCreateView(Android.Views.View,System.String,Android.Util.IAttributeSet)">
+            <summary>
+            Base version of <see cref="M:Android.Views.LayoutInflater.OnCreateView(System.String,Android.Util.IAttributeSet)" /> that also takes the future parent of the view being constructed.
+            </summary>
+            <param name="parent">The future parent of the returned view. Note that this may be null.</param>
+            <param name="name">The fully qualified class name of the View to be created.</param>
+            <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.CloneInContext(Android.Content.Context)">
+            <summary>
+            Create a copy of the existing layout inflater object, with the copy pointing to a different Context than the original.
+            </summary>
+            <param name="newContext">The new Context to associate with the new LayoutInflater. May be the same as the original Context if desired.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.InflateCustomView(Android.Views.View,Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Inflates a custom view.
+            </summary>
+            <param name="parent">The future parent of the returned view. Note that this may be null.</param>
+            <param name="view">A previous attempt at inflating the view using factories, or null.</param>
+            <param name="name">The fully qualified class name of the View to be created.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.Inflate(System.Int32,Android.Views.ViewGroup,System.Boolean)">
+            <summary>
+            Inflate a new view hierarchy from the specified XML resource.
+            </summary>
+            <param name="resource">ID for an XML layout resource to load (e.g. Resource.Layout.main_page).</param>
+            <param name="root">Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot"/> is <c>true</c>), or else simply an object that provides a set of <see cref="T:Android.Views.ViewGroup.LayoutParams" /> for root of the returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).</param>
+            <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="T:Android.Views.ViewGroup.LayoutParams" /> for the root view in the XML.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.Inflate(System.Xml.XmlReader,Android.Views.ViewGroup,System.Boolean)">
+            <summary>
+            Inflate a new view hierarchy from the specified XML node.
+            </summary>
+            <param name="parser">XML dom node containing the description of the view hierarchy.</param>
+            <param name="root">Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot"/> is <c>true</c>), or else simply an object that provides a set of <see cref="T:Android.Views.ViewGroup.LayoutParams" /> for root of the returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).</param>
+            <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="T:Android.Views.ViewGroup.LayoutParams" /> for the root view in the XML.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.OnCreateView(System.String,Android.Util.IAttributeSet)">
+            <summary>
+            This routine is for creating the correct subclass of View given the XML element name.
+            </summary>
+            <param name="name">The fully qualified class name of the View to be created.</param>
+            <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.OnCreateView(Android.Views.View,System.String,Android.Util.IAttributeSet)">
+            <summary>
+            Version of <see cref="M:Android.Views.LayoutInflater.OnCreateView(System.String,Android.Util.IAttributeSet)" /> that also takes the future parent of the view being constructed.
+            </summary>
+            <param name="parent">The future parent of the returned view. Note that this may be null.</param>
+            <param name="name">The fully qualified class name of the View to be created.</param>
+            <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.SetFactory(Android.Views.LayoutInflater.IFactory)">
+            <summary>
+            Sets the <see cref="T:Android.Views.LayoutInflater.IFactory" />.
+            </summary>
+            <param name="factory">The factory</param>
+        </member>
+        <member name="M:ViewPump.Infrastructure.ViewPumpLayoutInflater.SetFactory2(Android.Views.LayoutInflater.IFactory2)">
+            <summary>
+            Sets the <see cref="T:Android.Views.LayoutInflater.IFactory2" />.
+            </summary>
+            <param name="factory2">The factory.</param>
+        </member>
+        <member name="P:ViewPump.ViewCreators.Base.BaseViewCreator.LayoutInflater">
+            <summary>
+            Gets the <see cref="T:ViewPump.Infrastructure.ViewPumpLayoutInflater" />.
+            </summary>
+        </member>
+        <member name="M:ViewPump.ViewCreators.Base.BaseViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.Base.IViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.Factory2ViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.FactoryViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.NameViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.NameViewCreator.GetClassPrefixes">
+            <summary>
+            Gets the class prefixes for all Android UI components.
+            </summary>
+        </member>
+        <member name="M:ViewPump.ViewCreators.ParentNameViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="M:ViewPump.ViewCreators.PrivateFactory2ViewCreator.OnCreateView(Android.Views.View,System.String,Android.Content.Context,Android.Util.IAttributeSet)">
+            <summary>
+            Creates a view.
+            </summary>
+            <param name="parent">The view's parent, if any.</param>
+            <param name="name">The fully qualified name of the view being inflated.</param>
+            <param name="context">The context that the view will be inflated in.</param>
+            <param name="attrs">The attributes to apply to the view.</param>
+        </member>
+        <member name="T:ThisAssembly">
+            <summary>Provides access to the current assembly information.</summary>
+        </member>
+        <member name="T:ThisAssembly.Git">
+            <summary>Provides access to the git information for the current assembly.</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.IsDirty">
+            <summary>IsDirty: true</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.IsDirtyString">
+            <summary>IsDirtyString: true</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.RepositoryUrl">
+            <summary>Repository URL: https://github.com/lewisbennett/viewpump.git</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Branch">
+            <summary>Branch: release-1.0.0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Commit">
+            <summary>Commit: fb97d72</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Sha">
+            <summary>Sha: fb97d728df0339f3a472a6f49cf10143a9e2245f</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.CommitDate">
+            <summary>Commit date: 2021-04-30T19:01:28+01:00</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Commits">
+            <summary>Commits on top of base version: 12</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Tag">
+            <summary>Tag: </summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseTag">
+            <summary>Base tag: </summary>
+        </member>
+        <member name="T:ThisAssembly.Git.BaseVersion">
+            <summary>Provides access to the base version information used to determine the <see cref="T:ThisAssembly.Git.SemVer" />.</summary>      
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Major">
+            <summary>Major: 1</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Minor">
+            <summary>Minor: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Patch">
+            <summary>Patch: 0</summary>
+        </member>
+        <member name="T:ThisAssembly.Git.SemVer">
+            <summary>Provides access to SemVer information for the current assembly.</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Major">
+            <summary>Major: 1</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Minor">
+            <summary>Minor: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Patch">
+            <summary>Patch: 12</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Label">
+            <summary>Label: release</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.DashLabel">
+            <summary>Label with dash prefix: -release</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Source">
+            <summary>Source: Branch</summary>
+        </member>
+    </members>
+</doc>
