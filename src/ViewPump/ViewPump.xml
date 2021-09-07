@@ -371,49 +371,49 @@
             <summary>Repository URL: https://github.com/lewisbennett/viewpump.git</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
-            <summary>Branch: develop</summary>
+            <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 5865bb1</summary>
+            <summary>Commit: 160e7fc</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 5865bb18022f0b57191fe8d258bdb19af0438e5c</summary>
+            <summary>Sha: 160e7fc144a92f80756f7b104718708c6a261eca</summary>
         </member>
         <member name="F:ThisAssembly.Git.CommitDate">
-            <summary>Commit date: 2021-09-07T12:03:00+01:00</summary>
+            <summary>Commit date: 2021-09-07T12:09:48+01:00</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
             <summary>Commits on top of base version: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 0.99.1</summary>
+            <summary>Tag: 1.0.0</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
-            <summary>Base tag: 0.99.1</summary>
+            <summary>Base tag: 1.0.0</summary>
         </member>
         <member name="T:ThisAssembly.Git.BaseVersion">
             <summary>Provides access to the base version information used to determine the <see cref="T:ThisAssembly.Git.SemVer" />.</summary>      
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Major">
-            <summary>Major: 0</summary>
+            <summary>Major: 1</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Minor">
-            <summary>Minor: 99</summary>
+            <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Patch">
-            <summary>Patch: 1</summary>
+            <summary>Patch: 0</summary>
         </member>
         <member name="T:ThisAssembly.Git.SemVer">
             <summary>Provides access to SemVer information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Major">
-            <summary>Major: 0</summary>
+            <summary>Major: 1</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Minor">
-            <summary>Minor: 99</summary>
+            <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 1</summary>
+            <summary>Patch: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>
