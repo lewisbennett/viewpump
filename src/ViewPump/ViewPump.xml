@@ -362,67 +362,67 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: true</summary>
+            <summary>IsDirty: false</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: true</summary>
+            <summary>IsDirtyString: false</summary>
         </member>
         <member name="F:ThisAssembly.Git.RepositoryUrl">
             <summary>Repository URL: https://github.com/lewisbennett/viewpump.git</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
-            <summary>Branch: release-1.0.0</summary>
+            <summary>Branch: develop</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: fb97d72</summary>
+            <summary>Commit: 5865bb1</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: fb97d728df0339f3a472a6f49cf10143a9e2245f</summary>
+            <summary>Sha: 5865bb18022f0b57191fe8d258bdb19af0438e5c</summary>
         </member>
         <member name="F:ThisAssembly.Git.CommitDate">
-            <summary>Commit date: 2021-04-30T19:01:28+01:00</summary>
+            <summary>Commit date: 2021-09-07T12:03:00+01:00</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 12</summary>
+            <summary>Commits on top of base version: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: </summary>
+            <summary>Tag: 0.99.1</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
-            <summary>Base tag: </summary>
+            <summary>Base tag: 0.99.1</summary>
         </member>
         <member name="T:ThisAssembly.Git.BaseVersion">
             <summary>Provides access to the base version information used to determine the <see cref="T:ThisAssembly.Git.SemVer" />.</summary>      
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Major">
-            <summary>Major: 1</summary>
+            <summary>Major: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Minor">
-            <summary>Minor: 0</summary>
+            <summary>Minor: 99</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseVersion.Patch">
-            <summary>Patch: 0</summary>
+            <summary>Patch: 1</summary>
         </member>
         <member name="T:ThisAssembly.Git.SemVer">
             <summary>Provides access to SemVer information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Major">
-            <summary>Major: 1</summary>
+            <summary>Major: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Minor">
-            <summary>Minor: 0</summary>
+            <summary>Minor: 99</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 12</summary>
+            <summary>Patch: 1</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
-            <summary>Label: release</summary>
+            <summary>Label: </summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.DashLabel">
-            <summary>Label with dash prefix: -release</summary>
+            <summary>Label with dash prefix: </summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Source">
-            <summary>Source: Branch</summary>
+            <summary>Source: Tag</summary>
         </member>
     </members>
 </doc>
