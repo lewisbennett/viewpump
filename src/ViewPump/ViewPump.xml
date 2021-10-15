@@ -371,22 +371,22 @@
             <summary>Repository URL: https://github.com/lewisbennett/viewpump.git</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
-            <summary>Branch: develop</summary>
+            <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 3036ead</summary>
+            <summary>Commit: aec1ec7</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 3036ead94ee16785ec385333a1a0ea8db610e80d</summary>
+            <summary>Sha: aec1ec717474ac8d983238b96622e5cde852d3a4</summary>
         </member>
         <member name="F:ThisAssembly.Git.CommitDate">
-            <summary>Commit date: 2021-10-15T12:57:08+01:00</summary>
+            <summary>Commit date: 2021-10-15T12:59:56+01:00</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 0</summary>
+            <summary>Commits on top of base version: 1</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 1.0.1</summary>
+            <summary>Tag: 1.0.1-1-gaec1ec7</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 1.0.1</summary>
@@ -413,7 +413,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 1</summary>
+            <summary>Patch: 2</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>
