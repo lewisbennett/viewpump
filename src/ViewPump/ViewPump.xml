@@ -362,10 +362,10 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: false</summary>
+            <summary>IsDirty: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: false</summary>
+            <summary>IsDirtyString: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.RepositoryUrl">
             <summary>Repository URL: https://github.com/lewisbennett/viewpump.git</summary>
@@ -374,19 +374,19 @@
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 160e7fc</summary>
+            <summary>Commit: 0cadded</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 160e7fc144a92f80756f7b104718708c6a261eca</summary>
+            <summary>Sha: 0cadded87ea3bbe818b3ed847e17da5602af2de5</summary>
         </member>
         <member name="F:ThisAssembly.Git.CommitDate">
-            <summary>Commit date: 2021-09-07T12:09:48+01:00</summary>
+            <summary>Commit date: 2021-09-07T16:34:38+01:00</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 0</summary>
+            <summary>Commits on top of base version: 2</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 1.0.0</summary>
+            <summary>Tag: 1.0.0-2-g0cadded</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 1.0.0</summary>
@@ -413,7 +413,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 0</summary>
+            <summary>Patch: 2</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>
