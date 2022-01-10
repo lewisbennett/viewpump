@@ -2,8 +2,9 @@
 
 	<PropertyGroup>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Release'">high</GitInfoReportImportance>
-		<TargetFrameworks>monoandroid10.0</TargetFrameworks>
-		<LangVersion>9</LangVersion>
+		<TargetFramework>monoandroid10.0</TargetFramework>
+		<LangVersion>10</LangVersion>
+		<TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -17,53 +18,53 @@
 	</Target>
 
 	<PropertyGroup>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
-    <Authors>Lewis Bennett</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RootNamespace>ViewPump</RootNamespace>
-    <Description>View inflation interception in Xamarin.Android.</Description>
-    <RepositoryUrl>https://github.com/lewisbennett/viewpump</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/lewisbennett/viewpump</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>view,intercept,inflate,inflation,intercepting,layoutinflater</PackageTags>
-  </PropertyGroup>
+		<Authors>Lewis Bennett</Authors>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<RootNamespace>ViewPump</RootNamespace>
+		<Description>View inflation interception in Xamarin.Android.</Description>
+		<RepositoryUrl>https://github.com/lewisbennett/viewpump</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/lewisbennett/viewpump</PackageProjectUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageTags>view,intercept,inflate,inflation,intercepting,layoutinflater</PackageTags>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="$(GitBranch) == 'develop' or $(GitBranch) == 'master'">
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
-    <DebugType>pdbonly</DebugType>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <DocumentationFile>D:\Projects\.GitHub\viewpump\src\ViewPump\ViewPump.xml</DocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+		<DebugType>pdbonly</DebugType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<DocumentationFile>ViewPump.xml</DocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-	  <None Include="..\..\LICENSE">
-		  <Pack>True</Pack>
-		  <PackagePath></PackagePath>
-	  </None>
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
 
-	  <Compile Include="*.cs" />
-	  <Compile Include="Base\**\*.cs" />
-	  <Compile Include="Events\**\*.cs" />
-	  <Compile Include="Factories\**\*.cs" />
-	  <Compile Include="Infrastructure\**\*.cs" />
-	  <Compile Include="ViewCreators\**\*.cs" />
-	  <AndroidResource Include="Resources\**\*.xml" />
-	  <PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.4" />
-	  <PackageReference Include="GitInfo" Version="2.2.0">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-  </ItemGroup>
+		<Compile Include="*.cs" />
+		<Compile Include="Base\**\*.cs" />
+		<Compile Include="Events\**\*.cs" />
+		<Compile Include="Factories\**\*.cs" />
+		<Compile Include="Infrastructure\**\*.cs" />
+		<Compile Include="ViewCreators\**\*.cs" />
+		<AndroidResource Include="Resources\**\*.xml" />
+		<PackageReference Include="Xamarin.Google.Android.Material" Version="1.4.0.4" />
+		<PackageReference Include="GitInfo" Version="2.2.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
 	<Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec;_GetProjectVersion" DependsOnTargets="GitVersion">
 		<PropertyGroup>
