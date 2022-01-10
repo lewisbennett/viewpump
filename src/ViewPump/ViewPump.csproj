@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Release'">high</GitInfoReportImportance>
 		<TargetFrameworks>monoandroid10.0</TargetFrameworks>
-		<LangVersion>9</LangVersion>
+		<LangVersion>10</LangVersion>
+		<TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
