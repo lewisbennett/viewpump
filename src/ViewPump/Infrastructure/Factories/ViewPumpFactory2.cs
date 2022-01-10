@@ -12,9 +12,16 @@ public class ViewPumpFactory2 : Object, LayoutInflater.IFactory2
     private readonly Factory2ViewCreator _factory2ViewCreator;
     #endregion
 
+    #region Constructors
+    public ViewPumpFactory2(LayoutInflater.IFactory2 factory2)
+    {
+        _factory2ViewCreator = new Factory2ViewCreator(factory2);
+    }
+    #endregion
+
     #region Event Handlers
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
     /// <param name="context">The context that the view will be inflated in.</param>
@@ -25,7 +32,7 @@ public class ViewPumpFactory2 : Object, LayoutInflater.IFactory2
     }
 
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
@@ -34,13 +41,6 @@ public class ViewPumpFactory2 : Object, LayoutInflater.IFactory2
     public View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
     {
         return InterceptingService.Instance.Inflate(_factory2ViewCreator, context, attrs, name, parent);
-    }
-    #endregion
-
-    #region Constructors
-    public ViewPumpFactory2(LayoutInflater.IFactory2 factory2)
-    {
-        _factory2ViewCreator = new Factory2ViewCreator(factory2);
     }
     #endregion
 }

@@ -11,9 +11,16 @@ public class FactoryViewCreator : IViewCreator
     private readonly LayoutInflater.IFactory _factory;
     #endregion
 
+    #region Constructors
+    public FactoryViewCreator(LayoutInflater.IFactory factory)
+    {
+        _factory = factory;
+    }
+    #endregion
+
     #region Event Handlers
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
@@ -22,13 +29,6 @@ public class FactoryViewCreator : IViewCreator
     public View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
     {
         return _factory.OnCreateView(name, context, attrs);
-    }
-    #endregion
-
-    #region Constructors
-    public FactoryViewCreator(LayoutInflater.IFactory factory)
-    {
-        _factory = factory;
     }
     #endregion
 }

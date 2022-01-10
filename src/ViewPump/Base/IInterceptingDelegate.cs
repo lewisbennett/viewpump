@@ -8,7 +8,7 @@ public interface IInterceptingDelegate
 {
     #region Methods
     /// <summary>
-    /// Called before a view is inflated.
+    ///     Called before a view is inflated.
     /// </summary>
     /// <param name="context">The context that the view will be inflated in.</param>
     /// <param name="attrs">The attributes to apply to the view.</param>
@@ -17,7 +17,7 @@ public interface IInterceptingDelegate
     bool OnInflateRequested(Context context, IAttributeSet attrs, string name, View parent);
 
     /// <summary>
-    /// Called when a view has been inflated.
+    ///     Called when a view has been inflated.
     /// </summary>
     /// <param name="context">The context that the view exists within.</param>
     /// <param name="attrs">The attributes applied to the view.</param>

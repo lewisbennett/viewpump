@@ -8,9 +8,16 @@ namespace ViewPump.ViewCreators;
 
 public class ParentNameViewCreator : BaseViewCreator
 {
+    #region Constructors
+    public ParentNameViewCreator(ViewPumpLayoutInflater layoutInflater)
+        : base(layoutInflater)
+    {
+    }
+    #endregion
+
     #region Event Handlers
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
@@ -19,13 +26,6 @@ public class ParentNameViewCreator : BaseViewCreator
     public override View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
     {
         return LayoutInflater.BaseOnCreateView(parent, name, attrs);
-    }
-    #endregion
-
-    #region Constructors
-    public ParentNameViewCreator(ViewPumpLayoutInflater layoutInflater)
-        : base(layoutInflater)
-    {
     }
     #endregion
 }

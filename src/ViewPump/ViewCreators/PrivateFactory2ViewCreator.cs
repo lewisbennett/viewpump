@@ -12,9 +12,17 @@ public class PrivateFactory2ViewCreator : BaseViewCreator
     private readonly LayoutInflater.IFactory2 _factory2;
     #endregion
 
+    #region Constructors
+    public PrivateFactory2ViewCreator(ViewPumpLayoutInflater layoutInflater, LayoutInflater.IFactory2 factory2)
+        : base(layoutInflater)
+    {
+        _factory2 = factory2;
+    }
+    #endregion
+
     #region Event Handlers
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
@@ -23,14 +31,6 @@ public class PrivateFactory2ViewCreator : BaseViewCreator
     public override View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
     {
         return LayoutInflater.InflateCustomView(parent, _factory2.OnCreateView(parent, name, context, attrs), name, context, attrs);
-    }
-    #endregion
-
-    #region Constructors
-    public PrivateFactory2ViewCreator(ViewPumpLayoutInflater layoutInflater, LayoutInflater.IFactory2 factory2)
-        : base(layoutInflater)
-    {
-        _factory2 = factory2;
     }
     #endregion
 }

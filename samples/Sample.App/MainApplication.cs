@@ -8,6 +8,15 @@ namespace Sample.App;
 [Application]
 public class MainApplication : Application
 {
+    public MainApplication()
+    {
+    }
+
+    public MainApplication(IntPtr handle, JniHandleOwnership transfer)
+        : base(handle, transfer)
+    {
+    }
+
     public override void OnCreate()
     {
         base.OnCreate();
@@ -22,14 +31,5 @@ public class MainApplication : Application
 
         // Enable the storing of the layout resource ID as the tag on inflated views.
         InterceptingService.StoreLayoutResID = true;
-    }
-
-    public MainApplication()
-    {
-    }
-
-    public MainApplication(IntPtr handle, JniHandleOwnership transfer)
-        : base(handle, transfer)
-    {
     }
 }

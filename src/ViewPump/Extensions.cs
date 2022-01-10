@@ -9,7 +9,7 @@ public static class Extensions
 {
     #region Public Methods
     /// <summary>
-    /// Tries to invoke a method.
+    ///     Tries to invoke a method.
     /// </summary>
     /// <param name="target">The target object.</param>
     /// <param name="args">The method parameters.</param>
@@ -31,7 +31,7 @@ public static class Extensions
     }
 
     /// <summary>
-    /// Tries to set the value of the field.
+    ///     Tries to set the value of the field.
     /// </summary>
     /// <param name="target">The target object.</param>
     /// <param name="value">The value to set.</param>

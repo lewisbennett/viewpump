@@ -12,9 +12,16 @@ public class PrivateViewPumpFactory2 : Object, LayoutInflater.IFactory2
     private readonly PrivateFactory2ViewCreator _privateFactoryViewCreator;
     #endregion
 
+    #region Constructors
+    public PrivateViewPumpFactory2(LayoutInflater.IFactory2 factory2, ViewPumpLayoutInflater layoutInflater)
+    {
+        _privateFactoryViewCreator = new PrivateFactory2ViewCreator(layoutInflater, factory2);
+    }
+    #endregion
+
     #region Event Handlers
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
     /// <param name="context">The context that the view will be inflated in.</param>
@@ -25,7 +32,7 @@ public class PrivateViewPumpFactory2 : Object, LayoutInflater.IFactory2
     }
 
     /// <summary>
-    /// Creates a view.
+    ///     Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>
@@ -34,13 +41,6 @@ public class PrivateViewPumpFactory2 : Object, LayoutInflater.IFactory2
     public View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
     {
         return InterceptingService.Instance.Inflate(_privateFactoryViewCreator, context, attrs, name, parent);
-    }
-    #endregion
-
-    #region Constructors
-    public PrivateViewPumpFactory2(LayoutInflater.IFactory2 factory2, ViewPumpLayoutInflater layoutInflater)
-    {
-        _privateFactoryViewCreator = new PrivateFactory2ViewCreator(layoutInflater, factory2);
     }
     #endregion
 }
