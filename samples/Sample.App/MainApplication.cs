@@ -1,35 +1,37 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
+using System;
 using ViewPump;
 
-namespace Sample.App;
-
-[Application]
-public class MainApplication : Application
+namespace Sample.App
 {
-    public override void OnCreate()
+    [Application]
+    public class MainApplication : Application
     {
-        base.OnCreate();
+        public override void OnCreate()
+        {
+            base.OnCreate();
 
-        // Initialize the intercepting service.
-        InterceptingService.Init();
+            // Initialize the intercepting service.
+            InterceptingService.Init();
 
-        // Provide the intercepting service with a custom intercepting delegate.
-        // This allows us to be notified when views are about to be, and after they have been inflated.
-        // The delegate also allows us to control whether certain views should be allowed to be inflated.
-        InterceptingService.Delegate = new InterceptingDelegate();
+            // Provide the intercepting service with a custom intercepting delegate.
+            // This allows us to be notified when views are about to be, and after they have been inflated.
+            // The delegate also allows us to control whether certain views should be allowed to be inflated.
+            InterceptingService.Delegate = new InterceptingDelegate();
 
-        // Enable the storing of the layout resource ID as the tag on inflated views.
-        InterceptingService.StoreLayoutResID = true;
-    }
+            // Enable the storing of the layout resource ID as the tag on inflated views.
+            InterceptingService.StoreLayoutResID = true;
+        }
 
-    public MainApplication()
-    {
-    }
+        public MainApplication()
+            : base()
+        {
+        }
 
-    public MainApplication(IntPtr handle, JniHandleOwnership transfer)
-        : base(handle, transfer)
-    {
+        public MainApplication(IntPtr handle, JniHandleOwnership transfer)
+            : base(handle, transfer)
+        {
+        }
     }
 }

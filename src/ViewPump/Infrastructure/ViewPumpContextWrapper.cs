@@ -2,32 +2,33 @@
 using Android.Views;
 using Java.Lang;
 
-namespace ViewPump.Infrastructure;
-
-public class ViewPumpContextWrapper : ContextWrapper
+namespace ViewPump.Infrastructure
 {
-    #region Fields
-    private ViewPumpLayoutInflater _viewPumpLayoutInflater;
-    #endregion
-
-    #region Public Methods
-    /// <summary>
-    /// Return the handle to a system-level service by name.
-    /// </summary>
-    /// <param name="name">The name of the desired service.</param>
-    public override Object GetSystemService(string name)
+    public class ViewPumpContextWrapper : ContextWrapper
     {
-        if (name is LayoutInflaterService)
-            return _viewPumpLayoutInflater ??= new ViewPumpLayoutInflater(LayoutInflater.FromContext(BaseContext), this);
+        #region Fields
+        private ViewPumpLayoutInflater _viewPumpLayoutInflater;
+        #endregion
 
-        return base.GetSystemService(name);
-    }
-    #endregion
+        #region Public Methods
+        /// <summary>
+        /// Return the handle to a system-level service by name.
+        /// </summary>
+        /// <param name="name">The name of the desired service.</param>
+        public override Object GetSystemService(string name)
+        {
+            if (name != null && name.Equals(LayoutInflaterService))
+                return _viewPumpLayoutInflater ??= new ViewPumpLayoutInflater(LayoutInflater.FromContext(BaseContext), this);
 
-    #region Constructors
-    internal ViewPumpContextWrapper(Context context)
-        : base(context)
-    {
+            return base.GetSystemService(name);
+        }
+        #endregion
+
+        #region Constructors
+        internal ViewPumpContextWrapper(Context context)
+            : base(context)
+        {
+        }
+        #endregion
     }
-    #endregion
 }

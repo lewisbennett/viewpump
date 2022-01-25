@@ -1,55 +1,56 @@
-﻿using System;
+﻿using Java.Lang.Reflect;
+using System;
 using System.Diagnostics;
-using Java.Lang.Reflect;
 using Java_Object = Java.Lang.Object;
 
-namespace ViewPump;
-
-public static class Extensions
+namespace ViewPump
 {
-    #region Public Methods
-    /// <summary>
-    /// Tries to invoke a method.
-    /// </summary>
-    /// <param name="target">The target object.</param>
-    /// <param name="args">The method parameters.</param>
-    public static bool TryInvoke(this Method method, Java_Object target, params Java_Object[] args)
+    public static class Extensions
     {
-        try
+        #region Public Methods
+        /// <summary>
+        /// Tries to invoke a method.
+        /// </summary>
+        /// <param name="target">The target object.</param>
+        /// <param name="args">The method parameters.</param>
+        public static bool TryInvoke(this Method method, Java_Object target, params Java_Object[] args)
         {
-            method.Invoke(target, args);
+            try
+            {
+                method.Invoke(target, args);
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                // Ignore, but log.
+                Debug.WriteLine($"Could not invoke method {method.Name}: {e}");
+
+                return false;
+            }
         }
-        catch (Exception e)
+
+        /// <summary>
+        /// Tries to set the value of the field.
+        /// </summary>
+        /// <param name="target">The target object.</param>
+        /// <param name="value">The value to set.</param>
+        public static bool TrySet(this Field field, Java_Object target, Java_Object value)
         {
-            // Ignore, but log.
-            Debug.WriteLine($"Could not invoke method {method.Name}: {e}");
+            try
+            {
+                field.Set(target, value);
 
-            return false;
+                return true;
+            }
+            catch (Exception e)
+            {
+                // Ignore, but log.
+                Debug.WriteLine($"Could not set value for field {field.Name}: {e}");
+
+                return false;
+            }
         }
+        #endregion
     }
-
-    /// <summary>
-    /// Tries to set the value of the field.
-    /// </summary>
-    /// <param name="target">The target object.</param>
-    /// <param name="value">The value to set.</param>
-    public static bool TrySet(this Field field, Java_Object target, Java_Object value)
-    {
-        try
-        {
-            field.Set(target, value);
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            // Ignore, but log.
-            Debug.WriteLine($"Could not set value for field {field.Name}: {e}");
-
-            return false;
-        }
-    }
-    #endregion
 }
