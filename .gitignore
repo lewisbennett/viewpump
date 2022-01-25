@@ -351,3 +351,6 @@ MigrationBackup/
 
 # JetBrains
 .idea
+
+# Documentation XML for project
+src/ViewPump/ViewPump.xml
