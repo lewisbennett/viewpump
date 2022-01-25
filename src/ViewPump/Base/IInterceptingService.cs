@@ -1,7 +1,7 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Util;
 using Android.Views;
+using System;
 using ViewPump.Events;
 using ViewPump.ViewCreators.Base;
 
@@ -16,7 +16,7 @@ public interface IInterceptingService
 
     #region Methods
     /// <summary>
-    ///     Inflates a view.
+    /// Inflates a view.
     /// </summary>
     /// <param name="viewCreator">The <see cref="IViewCreator" /> in charge of creating the view.</param>
     /// <param name="context">The context that the view will be inflated in</param>
@@ -26,7 +26,7 @@ public interface IInterceptingService
     View Inflate(IViewCreator viewCreator, Context context, IAttributeSet attrs, string name, View parent);
 
     /// <summary>
-    ///     Provides a <see cref="ContextWrapper" /> for the supplied <see cref="Context" />.
+    /// Provides a <see cref="ContextWrapper" /> for the supplied <see cref="Context" />.
     /// </summary>
     /// <param name="context">The context to wrap.</param>
     ContextWrapper WrapContext(Context context);

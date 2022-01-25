@@ -16,7 +16,7 @@ public abstract class BaseInterceptingService : IInterceptingService
 
     #region Public Methods
     /// <summary>
-    ///     Inflates a view.
+    /// Inflates a view.
     /// </summary>
     /// <param name="viewCreator">The <see cref="IViewCreator" /> in charge of creating the view.</param>
     /// <param name="context">The context that the view will be inflated in</param>
@@ -29,7 +29,7 @@ public abstract class BaseInterceptingService : IInterceptingService
 
         if (InterceptingService.Delegate != null && !InterceptingService.Delegate.OnInflateRequested(context, attrs, name, parent) || viewCreator.OnCreateView(parent, name, context, attrs) is not { } view)
             return null;
-
+        
         // Try to assign the correct view name for the benefit of the below events.
         name = view.Class.Name;
 
@@ -41,7 +41,7 @@ public abstract class BaseInterceptingService : IInterceptingService
     }
 
     /// <summary>
-    ///     Provides a <see cref="ContextWrapper" /> for the supplied <see cref="Context" />.
+    /// Provides a <see cref="ContextWrapper" /> for the supplied <see cref="Context" />.
     /// </summary>
     /// <param name="context">The context to wrap.</param>
     public abstract ContextWrapper WrapContext(Context context);

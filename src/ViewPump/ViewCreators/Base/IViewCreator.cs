@@ -8,7 +8,7 @@ public interface IViewCreator
 {
     #region Methods
     /// <summary>
-    ///     Creates a view.
+    /// Creates a view.
     /// </summary>
     /// <param name="parent">The view's parent, if any.</param>
     /// <param name="name">The fully qualified name of the view being inflated.</param>

@@ -14,7 +14,13 @@ namespace Sample.App;
 public class InterceptingDelegate : IInterceptingDelegate
 {
     #region Event Handlers
-    /// <inheritdoc />
+    /// <summary>
+    /// Called before a view is inflated.
+    /// </summary>
+    /// <param name="context">The context that the view will be inflated in.</param>
+    /// <param name="attrs">The attributes to apply to the view.</param>
+    /// <param name="name">The fully qualified name of the view being inflated.</param>
+    /// <param name="parent">The view's parent, if any.</param>
     public bool OnInflateRequested(Context context, IAttributeSet attrs, string name, View parent)
     {
         // Return true to allow every view to be inflated.
@@ -22,7 +28,13 @@ public class InterceptingDelegate : IInterceptingDelegate
         return true;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Called when a view has been inflated.
+    /// </summary>
+    /// <param name="context">The context that the view exists within.</param>
+    /// <param name="attrs">The attributes applied to the view.</param>
+    /// <param name="name">The fully qualified name of the view.</param>
+    /// <param name="view">The inflated view.</param>
     public void OnViewInflated(Context context, IAttributeSet attrs, string name, View view)
     {
         switch (view)

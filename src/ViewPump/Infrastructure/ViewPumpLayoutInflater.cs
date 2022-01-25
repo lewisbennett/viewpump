@@ -16,15 +16,6 @@ namespace ViewPump.Infrastructure;
 
 public class ViewPumpLayoutInflater : LayoutInflater
 {
-    #region Constructors
-    internal ViewPumpLayoutInflater(LayoutInflater original, Context context)
-        : base(original, context)
-    {
-        _nameViewCreator = new NameViewCreator(this);
-        _parentNameViewCreator = new ParentNameViewCreator(this);
-    }
-    #endregion
-
     #region Fields
     private Field _constructorArgsField;
     private bool _hasSetPrivateFactory;
@@ -34,7 +25,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
 
     #region Public Methods
     /// <summary>
-    ///     Invokes the base routine for creating the correct subclass of View given the XML element name.
+    /// Invokes the base routine for creating the correct subclass of View given the XML element name.
     /// </summary>
     /// <param name="name">The fully qualified class name of the View to be created.</param>
     /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
@@ -52,8 +43,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Base version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future
-    ///     parent of the view being constructed.
+    /// Base version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future parent of the view being constructed.
     /// </summary>
     /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
     /// <param name="name">The fully qualified class name of the View to be created.</param>
@@ -72,20 +62,16 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Create a copy of the existing layout inflater object, with the copy pointing to a different Context than the
-    ///     original.
+    /// Create a copy of the existing layout inflater object, with the copy pointing to a different Context than the original.
     /// </summary>
-    /// <param name="newContext">
-    ///     The new Context to associate with the new LayoutInflater. May be the same as the original
-    ///     Context if desired.
-    /// </param>
+    /// <param name="newContext">The new Context to associate with the new LayoutInflater. May be the same as the original Context if desired.</param>
     public override LayoutInflater CloneInContext(Context newContext)
     {
         return new ViewPumpLayoutInflater(this, newContext);
     }
 
     /// <summary>
-    ///     Inflates a custom view.
+    /// Inflates a custom view.
     /// </summary>
     /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
     /// <param name="view">A previous attempt at inflating the view using factories, or null.</param>
@@ -123,19 +109,11 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Inflate a new view hierarchy from the specified XML resource.
+    /// Inflate a new view hierarchy from the specified XML resource.
     /// </summary>
     /// <param name="resource">ID for an XML layout resource to load (e.g. Resource.Layout.main_page).</param>
-    /// <param name="root">
-    ///     Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot" /> is
-    ///     <c>true</c>), or else simply an object that provides a set of <see cref="ViewGroup.LayoutParams" /> for root of the
-    ///     returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).
-    /// </param>
-    /// <param name="attachToRoot">
-    ///     Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>,
-    ///     <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for
-    ///     the root view in the XML.
-    /// </param>
+    /// <param name="root">Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot"/> is <c>true</c>), or else simply an object that provides a set of <see cref="ViewGroup.LayoutParams" /> for root of the returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).</param>
+    /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
     public override View Inflate(int resource, ViewGroup root, bool attachToRoot)
     {
         SetPrivateFactory();
@@ -149,19 +127,11 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Inflate a new view hierarchy from the specified XML node.
+    /// Inflate a new view hierarchy from the specified XML node.
     /// </summary>
     /// <param name="parser">XML dom node containing the description of the view hierarchy.</param>
-    /// <param name="root">
-    ///     Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot" /> is
-    ///     <c>true</c>), or else simply an object that provides a set of <see cref="ViewGroup.LayoutParams" /> for root of the
-    ///     returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).
-    /// </param>
-    /// <param name="attachToRoot">
-    ///     Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>,
-    ///     <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for
-    ///     the root view in the XML.
-    /// </param>
+    /// <param name="root">Optional view to be the parent of the generated hierarchy (if <paramref name="attachToRoot"/> is <c>true</c>), or else simply an object that provides a set of <see cref="ViewGroup.LayoutParams" /> for root of the returned hierarchy (if <paramref name="attachToRoot" /> is <c>false</c>).</param>
+    /// <param name="attachToRoot">Whether the inflated hierarchy should be attached to the root parameter. If <c>false</c>, <paramref name="root" /> is only used to create the correct subclass of <see cref="ViewGroup.LayoutParams" /> for the root view in the XML.</param>
     public override View Inflate(XmlReader parser, ViewGroup root, bool attachToRoot)
     {
         SetPrivateFactory();
@@ -170,7 +140,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     This routine is for creating the correct subclass of View given the XML element name.
+    /// This routine is for creating the correct subclass of View given the XML element name.
     /// </summary>
     /// <param name="name">The fully qualified class name of the View to be created.</param>
     /// <param name="attrs">An AttributeSet of attributes to apply to the View.</param>
@@ -180,8 +150,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future parent of
-    ///     the view being constructed.
+    /// Version of <see cref="LayoutInflater.OnCreateView(string?, IAttributeSet?)" /> that also takes the future parent of the view being constructed.
     /// </summary>
     /// <param name="parent">The future parent of the returned view. Note that this may be null.</param>
     /// <param name="name">The fully qualified class name of the View to be created.</param>
@@ -192,7 +161,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Sets the <see cref="LayoutInflater.IFactory" />.
+    /// Sets the <see cref="LayoutInflater.IFactory" />.
     /// </summary>
     /// <param name="factory">The factory</param>
     [Export("setFactory")]
@@ -202,13 +171,22 @@ public class ViewPumpLayoutInflater : LayoutInflater
     }
 
     /// <summary>
-    ///     Sets the <see cref="LayoutInflater.IFactory2" />.
+    /// Sets the <see cref="LayoutInflater.IFactory2" />.
     /// </summary>
     /// <param name="factory2">The factory.</param>
     [Export("setFactory2")]
     public void SetFactory2(IFactory2 factory2)
     {
         Factory2 = factory2 is ViewPumpFactory2 ? factory2 : new ViewPumpFactory2(factory2);
+    }
+    #endregion
+
+    #region Constructors
+    internal ViewPumpLayoutInflater(LayoutInflater original, Context context)
+        : base(original, context)
+    {
+        _nameViewCreator = new NameViewCreator(this);
+        _parentNameViewCreator = new ParentNameViewCreator(this);
     }
     #endregion
 
@@ -220,7 +198,7 @@ public class ViewPumpLayoutInflater : LayoutInflater
 #if __ANDROID_29__
         if (Build.VERSION.SdkInt > BuildVersionCodes.P)
             view = CreateView(context, name, null, attrs);
-
+            
         else
 #endif
             view = CreateView(name, null, attrs);
