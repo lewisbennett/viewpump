@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Release'">high</GitInfoReportImportance>
-		<TargetFramework>monoandroid10.0</TargetFramework>
+		<TargetFrameworks>monoandroid10.0</TargetFrameworks>
 		<LangVersion>10</LangVersion>
 		<TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
 	</PropertyGroup>
@@ -43,7 +43,7 @@
 	<PropertyGroup Condition=" '$(Configuration)'=='Release' ">
 		<DebugType>pdbonly</DebugType>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<DocumentationFile>ViewPump.xml</DocumentationFile>
+		<DocumentationFile>D:\Projects\.GitHub\viewpump\src\ViewPump\ViewPump.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
